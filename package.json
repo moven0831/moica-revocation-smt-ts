@@ -25,6 +25,7 @@
     "tsx": "^4.21.0",
     "typescript": "~5.8.0"
   },
+  "packageManager": "pnpm@9.12.3",
   "dependencies": {
     "@noble/curves": "^2.0.1",
     "@peculiar/x509": "^1.14.3",

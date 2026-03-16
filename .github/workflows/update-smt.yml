@@ -1,0 +1,47 @@
+name: Update SMT
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Fetch CRL
+        id: fetch
+        run: pnpm tsx src/fetch-crl.ts
+
+      - name: Build SMT
+        if: steps.fetch.outputs.changed == 'true'
+        run: pnpm tsx src/build-smt.ts
+
+      - name: Commit data
+        if: steps.fetch.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "update: CRL data $(date -u +%Y%m%d%H%M)"
+          git push
+
+      - name: Post root on-chain
+        if: steps.fetch.outputs.changed == 'true'
+        run: pnpm tsx src/post-root.ts
+        env:
+          RELAYER_PRIVATE_KEY: ${{ secrets.RELAYER_PRIVATE_KEY }}
+          RPC_URL: ${{ secrets.RPC_URL }}
+          CONTRACT_ADDRESS: ${{ secrets.CONTRACT_ADDRESS }}

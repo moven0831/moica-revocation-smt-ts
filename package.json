@@ -6,6 +6,8 @@
     "fetch": "tsx src/fetch-crl.ts",
     "build:smt": "tsx src/build-smt.ts",
     "post:root": "tsx src/post-root.ts",
+    "serve": "tsx src/server/index.ts",
+    "dev": "tsx watch src/server/index.ts",
     "compile": "pnpm hardhat compile",
     "test": "pnpm hardhat test"
   },
@@ -27,9 +29,11 @@
   },
   "packageManager": "pnpm@9.12.3",
   "dependencies": {
+    "@hono/node-server": "^1.19.11",
     "@noble/curves": "^2.0.1",
     "@peculiar/x509": "^1.14.3",
     "@zk-kit/smt": "^1.0.2",
-    "circomlibjs": "^0.1.7"
+    "circomlibjs": "^0.1.7",
+    "hono": "^4.12.8"
   }
 }

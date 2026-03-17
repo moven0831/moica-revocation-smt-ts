@@ -88,7 +88,7 @@ export function loadSnapshot(
   }
 }
 
-const GITHUB_REPO = "moven0831/moica-revocation-smt";
+const GITHUB_REPO = process.env.GITHUB_REPO ?? "moven0831/moica-revocation-smt";
 
 /**
  * Download a snapshot from the GitHub release "snapshot-latest".

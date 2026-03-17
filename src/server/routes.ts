@@ -40,7 +40,7 @@ app.get("/proof/:issuerId/:sn", (c) => {
     return c.json({ error: "Invalid issuerId" }, 400);
   }
 
-  if (!HEX_RE.test(sn)) {
+  if (!HEX_RE.test(sn) || sn.length > 64) {
     return c.json({ error: "Invalid serial number" }, 400);
   }
 

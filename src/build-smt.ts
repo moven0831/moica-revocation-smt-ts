@@ -3,6 +3,7 @@ import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { SMT } from "@zk-kit/smt";
 import { poseidonHash } from "./utils/poseidon.js";
+import { computeFileHash, saveSnapshot } from "./utils/tree-snapshot.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.resolve(__dirname, "../data");
@@ -62,11 +63,18 @@ async function main() {
     );
 
     const startTime = Date.now();
-    const { root, count } = buildSmtFromSerials(serials);
+    const { root, tree, count } = buildSmtFromSerials(serials);
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
 
     console.log(`${gen.toUpperCase()}: Root = 0x${root.toString(16)}`);
     console.log(`${gen.toUpperCase()}: ${count} entries in ${elapsed}s`);
+
+    // Save snapshot
+    const serialsHash = computeFileHash(serialsPath);
+    const snapshotPath = path.join(DATA_DIR, gen, "tree-snapshot.json.gz");
+    saveSnapshot(snapshotPath, tree, root, count, serialsHash);
+    const snapshotSize = (fs.statSync(snapshotPath).size / 1024 / 1024).toFixed(1);
+    console.log(`${gen.toUpperCase()}: Snapshot saved (${snapshotSize}MB)`);
 
     // Update root.json
     const rootPath = path.join(DATA_DIR, gen, "root.json");

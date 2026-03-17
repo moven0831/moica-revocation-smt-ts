@@ -32,7 +32,7 @@
     "@hono/node-server": "^1.19.11",
     "@noble/curves": "^2.0.1",
     "@peculiar/x509": "^1.14.3",
-    "@zk-kit/smt": "^1.0.2",
+    "@zk-kit/smt": "1.0.2",
     "circomlibjs": "^0.1.7",
     "hono": "^4.12.8"
   }

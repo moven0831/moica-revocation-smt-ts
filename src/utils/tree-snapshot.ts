@@ -81,6 +81,21 @@ export function loadSnapshot(
     const root = BigInt(data.root);
     (tree as any).root = root;
 
+    // Verify integrity by checking a sample entry
+    if (data.nodes.length > 0) {
+      const sampleKey = data.nodes[0][0];
+      try {
+        const proof = tree.createProof(BigInt(sampleKey));
+        if (!tree.verifyProof(proof)) {
+          console.error("Snapshot integrity check failed: proof verification failed");
+          return null;
+        }
+      } catch (err) {
+        console.error("Snapshot integrity check failed:", err);
+        return null;
+      }
+    }
+
     return { tree, root, count: data.count };
   } catch (err) {
     console.error("Failed to load snapshot:", err);

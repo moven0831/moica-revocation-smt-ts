@@ -1,6 +1,8 @@
 # moica-revocation-smt
 
-Converts MOICA Certificate Revocation Lists (CRL) into a Sparse Merkle Tree (SMT) for ZK non-membership proofs. The pipeline fetches Taiwan's MOICA CRL, parses revoked certificate serials, builds an SMT using Poseidon hash over the secq256r1 scalar field, and posts the root on-chain. A GitHub Action runs this every 6 hours.
+> **Note:** This project has moved to [moven0831/moica-revocation-smt](https://github.com/moven0831/moica-revocation-smt). The SMT update pipeline in this repo is deprecated and disabled.
+
+Converts MOICA Certificate Revocation Lists (CRL) into a Sparse Merkle Tree (SMT) for ZK non-membership proofs. The pipeline fetches Taiwan's MOICA CRL, parses revoked certificate serials, builds an SMT using Poseidon hash over the secq256r1 scalar field, and posts the root on-chain.
 
 ## Architecture
 
@@ -61,10 +63,6 @@ Deploy with Hardhat Ignition:
 ```bash
 pnpm hardhat ignition deploy ignition/modules/SMTRootStorage.ts --parameters '{"relayer":"0x..."}'
 ```
-
-## CI/CD
-
-> **Note:** The SMT update pipeline has moved to [moven0831/moica-revocation-smt](https://github.com/moven0831/moica-revocation-smt). The `update-smt.yml` workflow in this repo is deprecated and disabled.
 
 ## Generating Non-Membership Proofs
 

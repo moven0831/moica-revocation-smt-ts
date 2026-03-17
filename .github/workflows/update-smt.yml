@@ -1,11 +1,16 @@
-name: Update SMT
+name: "[DEPRECATED] Update SMT"
+
+# DEPRECATED: This workflow has been moved to https://github.com/moven0831/moica-revocation-smt
+# Keeping this file to prevent GitHub from re-enabling a deleted scheduled workflow.
 on:
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch: {}
+
+# All jobs are disabled — the pipeline now runs in the new repository.
+
 
 jobs:
   update:
+    if: false
     runs-on: ubuntu-latest
     permissions:
       contents: write

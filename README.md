@@ -64,13 +64,7 @@ pnpm hardhat ignition deploy ignition/modules/SMTRootStorage.ts --parameters '{"
 
 ## CI/CD
 
-The `update-smt.yml` workflow runs every 6 hours:
-1. Fetch CRL from MOICA
-2. Compare CRL number — skip if unchanged
-3. Build SMT, commit `data/` to repo
-4. Post root to on-chain contract
-
-**Required secrets**: `RELAYER_PRIVATE_KEY`, `RPC_URL`, `CONTRACT_ADDRESS`
+> **Note:** The SMT update pipeline has moved to [moven0831/moica-revocation-smt](https://github.com/moven0831/moica-revocation-smt). The `update-smt.yml` workflow in this repo is deprecated and disabled.
 
 ## Generating Non-Membership Proofs
 
